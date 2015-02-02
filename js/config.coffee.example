@@ -1,0 +1,5 @@
+module.exports =
+  protocol : "http"
+  serverName : "localhost"
+  webHost : "http://localhost:5000"
+  apiUrl: "http://localhost:3000"

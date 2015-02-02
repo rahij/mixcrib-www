@@ -1,0 +1,6 @@
+*.log
+node_modules/
+dist/
+bower_components/
+config.coffee
+bundle.min.js
