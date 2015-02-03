@@ -23,5 +23,4 @@ $ ->
     Router : require "./router.coffee"
   M.router = new Routers.Router()
   Backbone.history.start
-    pushState: true
     root: M.Config.appRoot

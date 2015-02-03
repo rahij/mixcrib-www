@@ -15,9 +15,10 @@ var paths = {
 gulp.task('scripts', function() {
   browserify({
     entries: paths.app,
-    extensions: ['.coffee', '.js']
+    extensions: ['.coffee', '.js', '.hbs']
   })
   .transform('coffeeify')
+  .transform('hbsfy')
   .transform('uglifyify')
   .bundle()
   .pipe(source(paths.app_bundle_name))
