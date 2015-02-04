@@ -1,5 +1,5 @@
 module.exports =
-  is_logged_in: ->
+  isLoggedIn: ->
     localStorage.getItem('id') && localStorage.getItem('auth_token')
   loginSuccess: (response) ->
     localStorage.setItem('id', response.id)
@@ -9,3 +9,17 @@ module.exports =
   logout: ->
     localStorage.removeItem('id')
     localStorage.removeItem('auth_token')
+  getUserId: ->
+    localStorage.getItem('id')
+  getAuthToken: ->
+    localStorage.getItem('auth_token')
+  getAuthOptions: ->
+    id: @getUserId()
+    auth_token: @getAuthToken()
+  setAuthentication: ->
+    if @isLoggedIn
+      data = @getAuthOptions()
+    else
+      data = {}
+    $.ajaxSetup
+      data: data

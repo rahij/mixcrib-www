@@ -2,6 +2,7 @@ $ = require "jquery"
 NavProfileView = require "./views/navProfileView.coffee"
 LoginView = require "./views/loginView.coffee"
 AuthHelper = require "./helpers/auth.coffee"
+User = require './models/user.coffee'
 
 module.exports =  Backbone.Router.extend
   initialize: ->
@@ -16,16 +17,17 @@ module.exports =  Backbone.Router.extend
     @navigate("music", {trigger : true})
 
   music: ->
-    if AuthHelper.is_logged_in()
-      console.log("do something")
-      # navProfileView = new NavProfileView({model: })
+    if AuthHelper.isLoggedIn()
+      currentUser = new User({id: AuthHelper.getUserId()})
+      new NavProfileView({ model: currentUser, el: '#nav-profile' }).render()
     else
       @navigate("login", {trigger : true})
 
   login: ->
+    if AuthHelper.isLoggedIn()
+      @navigate("music", {trigger : true})
     new LoginView({el: '#content'}).render()
 
   logout: ->
     AuthHelper.logout()
     @navigate("index", {trigger: true})
-
