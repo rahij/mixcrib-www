@@ -19,15 +19,21 @@ module.exports =  Backbone.Router.extend
   music: ->
     if AuthHelper.isLoggedIn()
       currentUser = new User({id: AuthHelper.getUserId()})
-      new NavProfileView({ model: currentUser, el: '#nav-profile' }).render()
+      global.MixcribApp.views.navProfile.model = currentUser
+      global.MixcribApp.views.navProfile.setElement('#nav-profile')
+      global.MixcribApp.views.navProfile.render()
     else
+      global.MixcribApp.views.loginLinks.render()
       @navigate("login", {trigger : true})
 
   login: ->
     if AuthHelper.isLoggedIn()
       @navigate("music", {trigger : true})
-    new LoginView({el: '#content'}).render()
+    global.MixcribApp.views.login.setElement('#content')
+    global.MixcribApp.views.login.render()
 
   logout: ->
     AuthHelper.logout()
-    @navigate("index", {trigger: true})
+    global.MixcribApp.views.navProfile.close()
+    global.MixcribApp.views.loginLinks.render()
+    @navigate("", {trigger: true})

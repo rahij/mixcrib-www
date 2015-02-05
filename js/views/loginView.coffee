@@ -1,7 +1,6 @@
 $ = require "jquery"
 BaseView = require "./baseView.coffee"
 loginTemplate = require "../templates/login.hbs"
-Config = require "../config.coffee"
 AuthHelper = require "../helpers/auth.coffee"
 
 module.exports = BaseView.extend
@@ -18,9 +17,11 @@ module.exports = BaseView.extend
     e.preventDefault()
     $.ajax
       type: 'GET'
-      url: Config.apiUrl + 'users/auth'
+      url: global.MixcribApp.Config.apiUrl + 'users/auth'
       data: @$("#login-form").serialize()
       success: (response) ->
         AuthHelper.loginSuccess(response)
+        global.MixcribApp.views.loginLinks.close()
+        global.MixcribApp.views.login.close()
         global.MixcribApp.router.navigate("music", {trigger: true})
       error: -> AuthHelper.loginError()
