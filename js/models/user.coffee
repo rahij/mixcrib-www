@@ -1,3 +1,4 @@
 BaseModel = require "./base.coffee"
+Config = require "../config.coffee"
 module.exports = BaseModel.extend
-  urlRoot: global.MixcribApp.Config.apiUrl + 'users'
+  urlRoot: Config.apiUrl + 'users'

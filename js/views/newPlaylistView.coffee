@@ -20,10 +20,9 @@ module.exports = BaseView.extend
 
   submitNewPlaylistForm: (e) ->
     e.preventDefault()
-    newPlaylist = new Playlist()
+    newPlaylist = new Playlist({name: $('#new-playlist-form #name').val()})
     newPlaylist.save {
         auth: AuthHelper.getAuthOptions()
-        name: $('#new-playlist-form #name').val()
       },
       success: (response) ->
-        console.log response
+        global.MixcribApp.router.navigate("playlist/#{newPlaylist.get('id')}", {trigger: true})
