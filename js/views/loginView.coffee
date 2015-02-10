@@ -2,6 +2,7 @@ $ = require "jquery"
 BaseView = require "./baseView.coffee"
 loginTemplate = require "../templates/login.hbs"
 AuthHelper = require "../helpers/auth.coffee"
+ViewTransitionsHelper = require "../helpers/viewTransitions.coffee"
 
 module.exports = BaseView.extend
   template: loginTemplate
@@ -21,7 +22,6 @@ module.exports = BaseView.extend
       data: @$("#login-form").serialize()
       success: (response) ->
         AuthHelper.loginSuccess(response)
-        global.MixcribApp.views.loginLinks.close()
-        global.MixcribApp.views.login.close()
+        ViewTransitionsHelper.afterLogin()
         global.MixcribApp.router.navigate("music", {trigger: true})
       error: -> AuthHelper.loginError()

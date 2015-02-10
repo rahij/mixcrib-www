@@ -14,12 +14,8 @@ module.exports =
   getAuthToken: ->
     localStorage.getItem('auth_token')
   getAuthOptions: ->
-    id: @getUserId()
-    auth_token: @getAuthToken()
-  setAuthentication: ->
     if @isLoggedIn
-      data = @getAuthOptions()
+      id: @getUserId()
+      auth_token: @getAuthToken()
     else
-      data = {}
-    $.ajaxSetup
-      data: data
+      {}

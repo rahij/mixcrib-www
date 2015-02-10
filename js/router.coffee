@@ -3,6 +3,7 @@ NavProfileView = require "./views/navProfileView.coffee"
 LoginView = require "./views/loginView.coffee"
 AuthHelper = require "./helpers/auth.coffee"
 User = require './models/user.coffee'
+ViewTransitionsHelper = require "./helpers/viewTransitions.coffee"
 
 module.exports =  Backbone.Router.extend
   initialize: ->
@@ -22,6 +23,9 @@ module.exports =  Backbone.Router.extend
       global.MixcribApp.views.navProfile.model = currentUser
       global.MixcribApp.views.navProfile.setElement('#nav-profile')
       global.MixcribApp.views.navProfile.render()
+
+      global.MixcribApp.views.newPlaylist.setElement('#content')
+      global.MixcribApp.views.newPlaylist.render()
     else
       global.MixcribApp.views.loginLinks.render()
       @navigate("login", {trigger : true})
@@ -34,6 +38,5 @@ module.exports =  Backbone.Router.extend
 
   logout: ->
     AuthHelper.logout()
-    global.MixcribApp.views.navProfile.close()
-    global.MixcribApp.views.loginLinks.render()
+    ViewTransitionsHelper.afterLogout()
     @navigate("", {trigger: true})
