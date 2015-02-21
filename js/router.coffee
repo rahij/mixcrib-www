@@ -43,36 +43,32 @@ module.exports =  Backbone.Router.extend
 
     if needAuth && !isLoggedIn
       global.MixcribApp.views.loginLinks.render()
-      @navigate("login", {trigger : true})
+      @navigate("/login", {trigger : true})
     else
       next()
 
   after: ->
 
   index: ->
-    @navigate("music", {trigger : true})
+    @navigate("/music", {trigger : true})
 
   music: ->
-    currentUser = new global.MixcribApp.Models.User({id: AuthHelper.getUserId()})
-    global.MixcribApp.views.navProfile.model = currentUser
-    global.MixcribApp.views.navProfile.setElement('#nav-profile')
-    global.MixcribApp.views.navProfile.render()
-
-    global.MixcribApp.views.newPlaylist.setElement('#content')
+    global.MixcribApp.views.newPlaylist.setElement('#main-wrapper')
     global.MixcribApp.views.newPlaylist.render(true)
 
   playlist: (id)->
+    ViewTransitionsHelper.beforePlaylist()
     global.MixcribApp.views.playlist.model = new global.MixcribApp.Models.Playlist({id: id})
-    global.MixcribApp.views.playlist.setElement('#content')
+    global.MixcribApp.views.playlist.setElement('#main-wrapper')
     global.MixcribApp.views.playlist.render(true)
 
   login: ->
     if AuthHelper.isLoggedIn()
-      @navigate("music", {trigger : true})
-    global.MixcribApp.views.login.setElement('#content')
+      @navigate("/music", {trigger : true})
+    global.MixcribApp.views.login.setElement('#main-wrapper')
     global.MixcribApp.views.login.render()
 
   logout: ->
     AuthHelper.logout()
     ViewTransitionsHelper.afterLogout()
-    @navigate("", {trigger: true})
+    @navigate("/", {trigger: true})
