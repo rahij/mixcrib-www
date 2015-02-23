@@ -1,4 +1,5 @@
 $ = require "jquery"
+_ = require "underscore"
 NavProfileView = require "./views/navProfileView.coffee"
 LoginView = require "./views/loginView.coffee"
 AuthHelper = require "./helpers/auth.coffee"

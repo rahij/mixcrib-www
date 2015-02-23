@@ -6,7 +6,7 @@ var rename = require('gulp-rename');
 var source = require('vinyl-source-stream');
 
 var paths = {
-  scripts: ['./js/**/*.coffee', './js/**/*.hbs'],
+  scripts: ['./js/**/*.coffee', './js/**/**/*.hbs'],
   app: ['./js/app.coffee'],
   app_bundle_name: 'bundle.min.js',
   app_bundle_dir: './'

@@ -18,3 +18,9 @@ module.exports = BaseView.extend
         el.html template({ playlists: collection.toJSON() })
         return @
     )
+  events:
+    "click a": "showPlaylist"
+  showPlaylist: (e) ->
+    e.preventDefault()
+    playlistId = $(e.currentTarget).attr('data-id')
+    global.MixcribApp.router.navigate("/playlist/#{playlistId}", {trigger: true})

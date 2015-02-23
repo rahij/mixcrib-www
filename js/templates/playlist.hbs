@@ -1,1 +1,8 @@
 Playlist Name: <span>{{playlist.name}}</span>
+<ul>
+  {{#each playlist.tracks}}
+    <li class="track" data-track-service={{this.service}} data-track-identifier={{this.identifier}}>{{this.title}} - ({{this.service}})</li>
+  {{/each}}
+</ul>
+
+<div id="player"></div>
