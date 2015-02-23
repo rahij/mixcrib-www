@@ -5,7 +5,6 @@ module.exports = SpotifyRemoteClient;
 function SpotifyRemoteClient(host) {
   this.host                  = host || window.location.hostname;
   this.elements              = [];
-  this._canTouchThis         = 'ontouchstart' in window || 'createTouch' in document;
   this._rangeInputBlocked    = false;
   this._sendRangeInput       = false;
   this._rememberedRangeInput = 0;
@@ -201,4 +200,8 @@ SpotifyRemoteClient.prototype.handleTracksResultClick = function(target) {
 
 SpotifyRemoteClient.prototype.playTrack = function(spotifyurl) {
   this.socket.emit('playTrack', spotifyurl);
+}
+
+SpotifyRemoteClient.prototype.pauseCurrentTrack = function() {
+  this.socket.emit('playPause')
 }
