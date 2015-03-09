@@ -1,0 +1,14 @@
+MusicSourceView = require "./base.coffee"
+soundcloud = require "common-soundcloud"
+
+module.exports = MusicSourceView.extend
+  initialize: (args) ->
+    @player = new soundcloud(args['container'])
+  play: ->
+    _player = @player
+    @player.on 'ready', ->
+      _player.play()
+  pause: ->
+    @player.pause()
+  clear: ->
+    @player.destroy()

@@ -7,7 +7,6 @@ Playlist = require "../models/playlist.coffee"
 playlistTemplate = require "../templates/playlist.hbs"
 SpotifyRemoteClient = require "../libs/spotify_remote_client.js"
 SoundCloud = require "common-soundcloud"
-youtube = require "youtube-iframe-player"
 
 module.exports = BaseView.extend
   template: playlistTemplate
@@ -45,27 +44,18 @@ module.exports = BaseView.extend
         @currentStopMethod = spClient.pauseCurrentTrack.bind(spClient)
       when 'soundcloud'
         trackTemplate = require "../templates/players/soundcloud.hbs"
+        SoundCloudSource = require "./music_sources/soundcloud.coffee"
         $('#player').html trackTemplate({track: {'identifier': trackIdentifier}})
-        player = new SoundCloud("soundcloud-player")
-        # @currentStopMethod = player.destroy.bind(player)
-        @currentStopMethod = false
+        @music_source = new SoundCloudSource({container: "soundcloud-player"})
+        @music_source.play()
+        @currentStopMethod = @music_source.clear.bind(@music_source)
       when 'youtube'
         trackTemplate = require "../templates/players/youtube.hbs"
+        YoutubeSource = require "./music_sources/youtube.coffee"
         $('#player').html trackTemplate()
-        youtube.init ->
-          onPlayerStateChange = (event) ->
-            console.log event
-          youtubePlayer = youtube.createPlayer("yt-player",
-            width: "720"
-            height: "405"
-            videoId: trackIdentifier
-            playerVars:
-              autoplay: 1
-              controls: 0
-            events:
-              onStateChange: onPlayerStateChange
-          )
-        @currentStopMethod = false
+        @music_source = new YoutubeSource({ container: "yt-player", trackIdentifier: trackIdentifier})
+        @music_source.play()
+        @currentStopMethod = @music_source.clear.bind(@music_source)
 
 
   stopCurrentTrack: ->
