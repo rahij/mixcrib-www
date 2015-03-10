@@ -7,7 +7,8 @@ module.exports = MusicSourceView.extend
   play: ->
     _player = @player
     @player.on 'ready', ->
-      _player.play()
+      if _player.player? # temporary hack until soundcloud fixes their shit (or maybe it's me)
+        _player.play()
   pause: ->
     @player.pause()
   clear: ->
